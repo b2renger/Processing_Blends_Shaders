@@ -60,6 +60,9 @@ PointSphere sphere ; // see codebase
 // 34) moving rectangles
 MovingRect [] rects = new MovingRect[20];
 
+// 35) moving circles
+MovingCircle [] circs = new MovingCircle[20];
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -133,6 +136,11 @@ void setup_drawings() {
   // 34) moving rectangles
   for (int i = 0 ; i < rects.length ; i++) {    
     rects[i] = new MovingRect(random(50, 1000), random(0, 255));
+  }
+  
+   // 35) moving circles
+  for (int i = 0 ; i < circs.length ; i++) {    
+    circs[i] = new MovingCircle(random(50, 1000), random(0, 255));
   }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -469,6 +477,40 @@ void draw_moving_rectangles(PGraphics pg, boolean top_mode) {
     for (int i = 0 ; i < rects.length ; i++) {   
       float newRad = random(0, 1200);
       rects[i].set_radius(newRad);
+      float newHue = random(0, 255);
+      //rects[i].set_hue(newHue);
+    }
+  }
+  pg.endDraw();
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 34) draw moving rectangles
+void draw_moving_circles(PGraphics pg, boolean top_mode) {
+  pg.beginDraw();
+  pg.background(0);
+  pg.smooth(8);
+  Arrays.sort(circs);
+  for (int i = 0 ; i <circs.length ; i+=1) {    
+    circs[i].draw_me(pg);
+    circs[i].update();
+  }
+
+  if (mousePressed && mouseButton == LEFT && top_mode) {
+    for (int i = 0 ; i < circs.length ; i++) {   
+      float newRad = random(0, 1200);
+      circs[i].set_radius(newRad);
+      float newHue = random(0, 255);
+      //rects[i].set_hue(newHue);
+    }
+  } else if (mousePressed && mouseButton == RIGHT && !top_mode) {
+    for (int i = 0 ; i < circs.length ; i++) {   
+      float newRad = random(0, 1200);
+      circs[i].set_radius(newRad);
       float newHue = random(0, 255);
       //rects[i].set_hue(newHue);
     }

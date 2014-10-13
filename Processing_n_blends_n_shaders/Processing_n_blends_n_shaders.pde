@@ -39,7 +39,7 @@ int nb_top_modes ;
 int nb_low_modes;
 
 // Show the GUI by default?
-boolean isGUI = false;
+boolean isGUI = true;
 
 
 

@@ -1044,6 +1044,66 @@ class MovingRect implements Comparable {
       return -1;
   }
 }
+/////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Moving_rectangle it implements comparable so that an array of moving rectangles can be sorted by radiuses
+// it needs an import
+import java.util.*;
+
+class MovingCircle implements Comparable {
+  float xpos, ypos;
+  color c_col;
+  Integrator hue;
+  Integrator radius;
+
+  MovingCircle(float rad, float hu) {
+    xpos = width/2;
+    ypos = height/2;
+
+    radius = new Integrator(rad);
+    hue = new Integrator(hu);
+  }
+
+  void update() {
+    radius.update();
+    hue.update();
+  }
+
+  void draw_me(PGraphics pg) {
+    pg.beginDraw();
+    //pg.background(0);
+
+    pg.pushMatrix();
+    pg.noStroke();
+    pg.rectMode(CENTER);
+    pg.translate (xpos, ypos);
+    pg.fill(hue.value);   
+    pg.ellipse(0, 0, radius.value, radius.value);
+    pg.rectMode(CORNER);
+    pg.popMatrix();
+    pg.endDraw();
+  }
+
+  void set_radius(float newValue) {
+    radius.target(newValue);
+  }
+
+  void set_hue (float newHue) {
+    hue.target(newHue);
+  }
+
+  int compareTo(Object o) {
+    MovingCircle other=(MovingCircle) o;
+    if (other.radius.value  > radius.value)  
+      return 1;
+    if (other.radius.value == radius.value)
+      return 0;
+    else
+      return -1;
+  }
+}
 
 
 

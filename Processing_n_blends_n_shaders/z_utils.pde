@@ -34,7 +34,8 @@ String[] animationNames = {
   "conway_shader  -- ( 's' and 'S' to decrease and increase speed / click and drag mouse around )", 
   "deform_shader  -- (click and drag the mouse around )", 
   "deform_image_shader  -- ( click and drag the mouse around )", 
-  "moving_rectangles -- (click to move things aroud)"
+  "moving_rectangles -- (click to move things aroud)",
+  "moving_circles -- (click to move things aroud)"
 };
 
 
@@ -192,6 +193,9 @@ void switch_drawings(PGraphics pg, int index, boolean top_mode) {
     draw_deform_image_shader(pg, image_1, top_mode);
   } else if (index == 34) {
     draw_moving_rectangles(pg, top_mode);
+  }
+  else if (index == 35) {
+    draw_moving_circles(pg, top_mode);
   }
 }
 
