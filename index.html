@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Processing blends shaders : experimental framework with processing">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Processing blends shaders</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/b2renger/Processing_Blends_Shaders">View on GitHub</a>
+
+          <h1 id="project_title">Processing blends shaders</h1>
+          <h2 id="project_tagline">experimental framework with processing</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/b2renger/Processing_Blends_Shaders/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/b2renger/Processing_Blends_Shaders/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="processing_n_blends_n_shaders" class="anchor" href="#processing_n_blends_n_shaders" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Processing_n_Blends_n_Shaders</h1>
+
+<p>check out the demo video : <a href="https://vimeo.com/107819398">https://vimeo.com/107819398</a></p>
+
+
+
+<p><a href="https://vimeo.com/107819398">Processing : Blends and Shaders</a> from <a href="https://vimeo.com/user4231931">Berenger Recoules</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+
+<h1>
+<a id="foreword" class="anchor" href="#foreword" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Foreword</h1>
+
+<p>most of the code here comes from Raphaël de Courville a.k.a sableRaf 
+you should definitely look at his repos, and specifically at this repo : <a href="https://github.com/SableRaf/Processing-Experiments">https://github.com/SableRaf/Processing-Experiments</a> which holds most of the shader code used here. Other shaders come from the processing examples (you know ... in File -&gt; Examples -&gt; Topics -&gt; Shaders)</p>
+
+<p>A lot of code also comes from internet, I tried to track down the origins of the code published here, but I may have made mistakes, so don't hesitate to claim attribution if you recognized something you coded, or feel there is a problem of licesing.</p>
+
+<p>if you do something with it, don't hesitate to drop me a mail !</p>
+
+<p>for questions and comments you can use the issues tracker of github.</p>
+
+<h1>
+<a id="what-is-it-" class="anchor" href="#what-is-it-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is it ?</h1>
+
+<p>This repo hosts the code for my framework to experiment with blend modes, and shaders in Processing. The main goal is to be able to blend anything with anything, so you've got a basic blending mechanism (blend a "top layer" with a "low layer" made of a PGraphics object), and then you have a bunch of functions to write several things in those two PGraphics objects. All the blending happens with a shader, so it's really fast.</p>
+
+<p>Some functions are processing drawings. (you'll need to use processing video, a webcam could be usefull too)
+Some functions are fragment shaders.</p>
+
+<p>You've got control over blend modes, and several drawing modes for each PGraphics object with the keyboard. Sometimes other controls are available with the mouse.</p>
+
+<h1>
+<a id="why" class="anchor" href="#why" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why</h1>
+
+<p>I made this because shaders are hard to code but there's a lot of them on the web so I wanted to have a litlle library of shader effects. Also blends are fun, but blends written are a lot more fun since they are fast even on small machines. And when you combine all this it actually gets pretty fun :) 
+So it's more for exeperimenting but I wanted to keep it modular so it can be easily re-arranged, it should be easy to create another code structure to have the desired effect at the touch of key. I guess it could easily be turned into a VJing software just moving a few things around.
+Those examples won't help you write shaders but hopefully it will help you use them.
+So have fun !</p>
+
+<h1>
+<a id="some-of-the-stuff-here-doesnt-make-anything-what-do-i-do-" class="anchor" href="#some-of-the-stuff-here-doesnt-make-anything-what-do-i-do-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Some of the stuff here doesn't make anything, what do I do ?</h1>
+
+<p>Everything is blended and for convenience, I only use one big list of animation, so for instance if you use the shader "cloud" (which graphics should be mostly white) as a low layer of your blend while being in mode darken ... then you don't get much of result. If you don't undestand this check out more ressources on blends, many people have explained this way better than I would be able to do.</p>
+
+<h1>
+<a id="contribute" class="anchor" href="#contribute" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contribute</h1>
+
+<p>Please do some pullrequest to add more shaders or drawings ! just be sure to add them to the list so everything won't break and if you can try to comment the processing code a bit to explain how the shader works (uniforms, controls etc.)</p>
+
+<p>For instance, here is how to add a new shader in three steps.</p>
+
+<p>1- First, in the "shader" tab, you can add you code as you would usually build your processing code : so declare your variables at the top, initialize them in the setup_shaders() function with comments, and then add a new function which writes the output of your shader to PGraphics object : </p>
+
+<p>void draw_myShader_shader(PGraphics pg){
+    pg.beginDraw();
+    (...)
+    pg.endDraw();
+}</p>
+
+<p>2- Then, in the main draw() loop of the programm,  you'll find this : switch_drawings(PGraphics pg, int index, boolean top_mode)
+You'll need to modify this function to be able to draw your effect.
+ else if (index == myValue) { // (myValue needs to be replaced, by the value that is actually right for were you are)
+      draw_myShader_shader(top_pg);
+  }</p>
+
+<p>3- And last but not least, here's what you need to modify in the main tab to include your contribution to the showcase : 
+you need to add its name to the "String[] animationNames" </p>
+
+<p>the name is used to be displayed  in the gui so if you don't add it the programm will break (probably with a nullpointer), I also use this array of strings to be able to give interaction info about the shader when applicable.</p>
+
+<p>Interaction with your code needs a little trick, not to interfere with others :</p>
+
+<p>Please note that general controls are kept in the main tab, whereas specific controls are kept in their functions, some key are already used please do not change them, if you add more, you can document them at the start of the code, and in your animation names.</p>
+
+<p>If you plan implementing mouse interaction in the code you contribute, the controls for top_drawing use a left-click on the mouse before passing data to our function and the same goes for low_drawing and right-click. This is because we want to be able the interact with one layer keeping the other one intact. So what we do is use a boolean that we pass on our drawing function to know if we are on the top_layer or not.</p>
+
+<p>if (mousePressed &amp;&amp; mouseButton == LEFT &amp;&amp; top_mode){
+    // this means if we are on top layer so we use left button
+}
+ else if (mousePressed &amp;&amp; mouseButton = RIGHT &amp;&amp; !top_mode){</p>
+
+<p>}</p>
+
+<p>it relates to this  in the main tab:
+ switch_drawings(top_pg, top_pg_index, true); // we draw on top_pg, we draw the drawing at top_pg_indes in our animation list, we explicitly say true to top_pg</p>
+
+<p>this boolean can then be passed to your drawings if you need it.</p>
+
+<p>If you have done everything right you are good to go !</p>
+
+<p>If you are not used to github pullrequest, you can just send me a mail, but it's not that hard an you should try it and get your profile linked as a contributor.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Processing blends shaders maintained by <a href="https://github.com/b2renger">b2renger</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
