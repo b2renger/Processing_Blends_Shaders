@@ -34,17 +34,18 @@
         <h1>
 <a id="processing_n_blends_n_shaders" class="anchor" href="#processing_n_blends_n_shaders" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Processing_n_Blends_n_Shaders</h1>
 
+<h1></h1>
+
 <p>check out the demo video : <a href="https://vimeo.com/107819398">https://vimeo.com/107819398</a></p>
-
-
-
-<p><a href="https://vimeo.com/107819398">Processing : Blends and Shaders</a> from <a href="https://vimeo.com/user4231931">Berenger Recoules</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 
 <h1>
 <a id="foreword" class="anchor" href="#foreword" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Foreword</h1>
 
-<p>most of the code here comes from Raphaël de Courville a.k.a sableRaf 
-you should definitely look at his repos, and specifically at this repo : <a href="https://github.com/SableRaf/Processing-Experiments">https://github.com/SableRaf/Processing-Experiments</a> which holds most of the shader code used here. Other shaders come from the processing examples (you know ... in File -&gt; Examples -&gt; Topics -&gt; Shaders)</p>
+<p>most of the code here comes from Raphaël de Courville a.k.a sableRaf </p>
+
+<p>you should definitely look at his repos, and specifically at this repo : <a href="https://github.com/SableRaf/Processing-Experiments">https://github.com/SableRaf/Processing-Experiments</a> which holds most of the shader code used here. </p>
+
+<p>Other shaders come from the processing examples (you know ... in File -&gt; Examples -&gt; Topics -&gt; Shaders)</p>
 
 <p>A lot of code also comes from internet, I tried to track down the origins of the code published here, but I may have made mistakes, so don't hesitate to claim attribution if you recognized something you coded, or feel there is a problem of licesing.</p>
 
@@ -57,17 +58,21 @@ you should definitely look at his repos, and specifically at this repo : <a href
 
 <p>This repo hosts the code for my framework to experiment with blend modes, and shaders in Processing. The main goal is to be able to blend anything with anything, so you've got a basic blending mechanism (blend a "top layer" with a "low layer" made of a PGraphics object), and then you have a bunch of functions to write several things in those two PGraphics objects. All the blending happens with a shader, so it's really fast.</p>
 
-<p>Some functions are processing drawings. (you'll need to use processing video, a webcam could be usefull too)
-Some functions are fragment shaders.</p>
+<pre><code>- Some functions are processing drawings. (you'll need to use processing video, a webcam could be usefull too)
+
+- Some functions are fragment shaders.
+</code></pre>
 
 <p>You've got control over blend modes, and several drawing modes for each PGraphics object with the keyboard. Sometimes other controls are available with the mouse.</p>
 
 <h1>
 <a id="why" class="anchor" href="#why" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why</h1>
 
-<p>I made this because shaders are hard to code but there's a lot of them on the web so I wanted to have a litlle library of shader effects. Also blends are fun, but blends written are a lot more fun since they are fast even on small machines. And when you combine all this it actually gets pretty fun :) 
-So it's more for exeperimenting but I wanted to keep it modular so it can be easily re-arranged, it should be easy to create another code structure to have the desired effect at the touch of key. I guess it could easily be turned into a VJing software just moving a few things around.
-Those examples won't help you write shaders but hopefully it will help you use them.
+<p>I made this because shaders are hard to code but there's a lot of them on the web so I wanted to have a litlle library of shader effects. Also blends are fun, but blends written are a lot more fun since they are fast even on small machines. And when you combine all this it actually gets pretty fun :) </p>
+
+<p>So it's more for exeperimenting but I wanted to keep it modular so it can be easily re-arranged, it should be easy to create another code structure to have the desired effect at the touch of key. I guess it could easily be turned into a VJing software just moving a few things around.</p>
+
+<p>Those examples won't help you write shaders but hopefully it will help you use them.
 So have fun !</p>
 
 <h1>
@@ -82,22 +87,26 @@ So have fun !</p>
 
 <p>For instance, here is how to add a new shader in three steps.</p>
 
-<p>1- First, in the "shader" tab, you can add you code as you would usually build your processing code : so declare your variables at the top, initialize them in the setup_shaders() function with comments, and then add a new function which writes the output of your shader to PGraphics object : </p>
+<p><strong>1-</strong> First, in the "shader" tab, you can add you code as you would usually build your processing code : so declare your variables at the top, initialize them in the setup_shaders() function with comments, and then add a new function which writes the output of your shader to PGraphics object : </p>
 
-<p>void draw_myShader_shader(PGraphics pg){
-    pg.beginDraw();
-    (...)
-    pg.endDraw();
-}</p>
+<div class="highlight highlight-source-java"><pre><span class="pl-k">void</span> draw_myShader_shader(<span class="pl-smi">PGraphics</span> pg){
+    pg<span class="pl-k">.</span>beginDraw();
+    (<span class="pl-c1">...</span>)
+    pg<span class="pl-k">.</span>endDraw();
+}</pre></div>
 
-<p>2- Then, in the main draw() loop of the programm,  you'll find this : switch_drawings(PGraphics pg, int index, boolean top_mode)
-You'll need to modify this function to be able to draw your effect.
- else if (index == myValue) { // (myValue needs to be replaced, by the value that is actually right for were you are)
+<p><strong>2-</strong> Then, in the main draw() loop of the programm,  you'll find this : switch_drawings(PGraphics pg, int index, boolean top_mode)</p>
+
+<p>You'll need to modify this function to be able to draw your effect.</p>
+
+<div class="highlight highlight-source-java"><pre> <span class="pl-k">else</span> <span class="pl-k">if</span> (index <span class="pl-k">==</span> myValue) { <span class="pl-c">// (myValue needs to be replaced, by the value that is actually right for were you are)</span>
       draw_myShader_shader(top_pg);
-  }</p>
+  }</pre></div>
 
-<p>3- And last but not least, here's what you need to modify in the main tab to include your contribution to the showcase : 
-you need to add its name to the "String[] animationNames" </p>
+<p><strong>3-</strong> And last but not least, here's what you need to modify in the main tab to include your contribution to the showcase : 
+you need to add its name to the </p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">String</span>[] animationNames </pre></div>
 
 <p>the name is used to be displayed  in the gui so if you don't add it the programm will break (probably with a nullpointer), I also use this array of strings to be able to give interaction info about the shader when applicable.</p>
 
@@ -107,15 +116,16 @@ you need to add its name to the "String[] animationNames" </p>
 
 <p>If you plan implementing mouse interaction in the code you contribute, the controls for top_drawing use a left-click on the mouse before passing data to our function and the same goes for low_drawing and right-click. This is because we want to be able the interact with one layer keeping the other one intact. So what we do is use a boolean that we pass on our drawing function to know if we are on the top_layer or not.</p>
 
-<p>if (mousePressed &amp;&amp; mouseButton == LEFT &amp;&amp; top_mode){
-    // this means if we are on top layer so we use left button
+<div class="highlight highlight-source-java"><pre><span class="pl-k">if</span> (mousePressed <span class="pl-k">&amp;&amp;</span> mouseButton <span class="pl-k">==</span> <span class="pl-c1">LEFT</span> <span class="pl-k">&amp;&amp;</span> top_mode){
+    <span class="pl-c">// this means if we are on top layer so we use left button</span>
 }
- else if (mousePressed &amp;&amp; mouseButton = RIGHT &amp;&amp; !top_mode){</p>
+ <span class="pl-k">else</span> <span class="pl-k">if</span> (mousePressed <span class="pl-k">&amp;&amp;</span> mouseButton <span class="pl-k">=</span> <span class="pl-c1">RIGHT</span> <span class="pl-k">&amp;&amp;</span> <span class="pl-k">!</span>top_mode){
 
-<p>}</p>
+}</pre></div>
 
-<p>it relates to this  in the main tab:
- switch_drawings(top_pg, top_pg_index, true); // we draw on top_pg, we draw the drawing at top_pg_indes in our animation list, we explicitly say true to top_pg</p>
+<p>it relates to this  in the main tab:</p>
+
+<div class="highlight highlight-source-java"><pre> switch_drawings(top_pg, top_pg_index, <span class="pl-c1">true</span>); <span class="pl-c">// we draw on top_pg, we draw the drawing at top_pg_indes in our animation list, we explicitly say true to top_pg</span></pre></div>
 
 <p>this boolean can then be passed to your drawings if you need it.</p>
 
