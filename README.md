@@ -23,9 +23,9 @@ What is it ?
 ============
 This repo hosts the code for my framework to experiment with blend modes, and shaders in Processing. The main goal is to be able to blend anything with anything, so you've got a basic blending mechanism (blend a "top layer" with a "low layer" made of a PGraphics object), and then you have a bunch of functions to write several things in those two PGraphics objects. All the blending happens with a shader, so it's really fast.
 
-	- Some functions are processing drawings. (you'll need to use processing video, a webcam could be usefull too)
+* Some functions are processing drawings. (you'll need to use processing video, a webcam could be usefull too)
 
-	- Some functions are fragment shaders.
+* Some functions are fragment shaders.
 
 You've got control over blend modes, and several drawing modes for each PGraphics object with the keyboard. Sometimes other controls are available with the mouse.
 
