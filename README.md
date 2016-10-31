@@ -23,9 +23,9 @@ What is it ?
 ============
 This repo hosts the code for my framework to experiment with blend modes, and shaders in Processing. The main goal is to be able to blend anything with anything, so you've got a basic blending mechanism (blend a "top layer" with a "low layer" made of a PGraphics object), and then you have a bunch of functions to write several things in those two PGraphics objects. All the blending happens with a shader, so it's really fast.
 
-Some functions are processing drawings. (you'll need to use processing video, a webcam could be usefull too)
+	- Some functions are processing drawings. (you'll need to use processing video, a webcam could be usefull too)
 
-Some functions are fragment shaders.
+	- Some functions are fragment shaders.
 
 You've got control over blend modes, and several drawing modes for each PGraphics object with the keyboard. Sometimes other controls are available with the mouse.
 
@@ -42,6 +42,7 @@ So have fun !
 
 Some of the stuff here doesn't make anything, what do I do ?
 ============================================================
+
 Everything is blended and for convenience, I only use one big list of animation, so for instance if you use the shader "cloud" (which graphics should be mostly white) as a low layer of your blend while being in mode darken ... then you don't get much of result. If you don't undestand this check out more ressources on blends, many people have explained this way better than I would be able to do.
 
 
@@ -54,7 +55,7 @@ For instance, here is how to add a new shader in three steps.
 
 **1-** First, in the "shader" tab, you can add you code as you would usually build your processing code : so declare your variables at the top, initialize them in the setup_shaders() function with comments, and then add a new function which writes the output of your shader to PGraphics object : 
 
-```
+```java
 void draw_myShader_shader(PGraphics pg){
 	pg.beginDraw();
 	(...)
@@ -66,7 +67,8 @@ void draw_myShader_shader(PGraphics pg){
 **2-** Then, in the main draw() loop of the programm,  you'll find this : switch_drawings(PGraphics pg, int index, boolean top_mode)
 
 You'll need to modify this function to be able to draw your effect.
-```
+
+```java
  else if (index == myValue) { // (myValue needs to be replaced, by the value that is actually right for were you are)
       draw_myShader_shader(top_pg);
   }
@@ -74,7 +76,8 @@ You'll need to modify this function to be able to draw your effect.
 
 **3-** And last but not least, here's what you need to modify in the main tab to include your contribution to the showcase : 
 you need to add its name to the 
-```
+
+``` java
 String[] animationNames 
 ```
 
@@ -87,7 +90,7 @@ Please note that general controls are kept in the main tab, whereas specific con
 
 If you plan implementing mouse interaction in the code you contribute, the controls for top_drawing use a left-click on the mouse before passing data to our function and the same goes for low_drawing and right-click. This is because we want to be able the interact with one layer keeping the other one intact. So what we do is use a boolean that we pass on our drawing function to know if we are on the top_layer or not.
 
-```
+``` java
 if (mousePressed && mouseButton == LEFT && top_mode){
 	// this means if we are on top layer so we use left button
 }
@@ -98,7 +101,7 @@ if (mousePressed && mouseButton == LEFT && top_mode){
 
 it relates to this  in the main tab:
 
-```
+``` java
  switch_drawings(top_pg, top_pg_index, true); // we draw on top_pg, we draw the drawing at top_pg_indes in our animation list, we explicitly say true to top_pg
  ```
 
